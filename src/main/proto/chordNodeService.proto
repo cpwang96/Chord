@@ -1,0 +1,218 @@
+syntax = "proto3";
+
+package chord;
+
+option java_multiple_files = true;
+option java_outer_classname = "ChordNodeProto";
+option objc_class_prefix = "CN";
+option java_package = "net.grpc.chord";
+
+service ChordNodeService{
+//    function
+    rpc Notify(NotifyRequest) returns  (NotifyResponse){}
+    rpc FindSuccessor(FindSuccessorRequest) returns (FindSuccessorResponse){}
+    rpc InquirePredecessor(InquirePredecessorRequest) returns (InquirePredecessorResponse){}
+    rpc Ping(PingRequest) returns (PingResponse){}
+    rpc TransferData(TransferDataRequest) returns (TransferDataResponse){}
+    rpc Put(PutRequest) returns (PutResponse) {}
+    rpc Get(GetRequest) returns (GetResponse) {}
+    rpc InquireSuccessorsList(InquireSuccessorsListRequest) returns (InquireSuccessorsListResponse) {}
+    rpc AcceptMyData(AcceptMyDataRequest) returns (AcceptMyDataResponse) {}
+    rpc RemoveReplica(RemoveReplicaRequest) returns (RemoveReplicaResponse) {}
+    rpc AddReplica(AddReplicaRequest) returns (AddReplicaResponse) {}
+    rpc AddScatteredReplica(AddScatteredReplicaRequest) returns (AddScatteredReplicaResponse) {}
+    rpc AddMultipleScatteredReplica(AddMultipleScatteredReplicaRequest) returns (AddMultipleScatteredReplicaResponse) {}
+    rpc RemoveMultipleScatteredReplica(RemoveMultipleScatteredReplicaRequest) returns (RemoveMultipleScatteredReplicaResponse) {}
+    rpc MeasureDistance(MeasureDistanceRequest) returns (MeasureDistanceResponse) {}
+//    for evalution
+    rpc TellmeKeyNumber(TellmeKeyNumberRequest) returns (TellmeKeyNumberResponse) {}
+    rpc TellmeFingerTable(TellmeFingerTableRequest) returns (TellmeFingerTableResponse) {}
+    rpc TellmeReplicaKeyNumber(TellmeReplicaKeyNumberRequest) returns (TellmeReplicaKeyNumberResponse) {}
+    rpc Kill(KillRequest) returns (KillResponse) {}
+    rpc FindSuccessorIteratively(FindSuccessorIterativelyRequest) returns (FindSuccessorIterativelyResponse) {}
+}
+
+enum ReturnCode {
+    SUCCESS = 0;
+    FAILURE = 1;
+}
+
+
+message FindSuccessorIterativelyRequest {
+    int32 ID = 1;
+}
+
+message FindSuccessorIterativelyResponse {
+    Identifier identifier = 1;
+    bool isCompleted = 2;
+    int32 hop = 3;
+}
+
+message RemoveReplicaRequest {
+    Identifier identifier = 1;
+}
+
+message RemoveReplicaResponse {
+}
+
+
+message InquireSuccessorsListRequest {
+}
+
+message InquireSuccessorsListResponse {
+    repeated Identifier successorsList = 1;
+}
+
+message PutRequest {
+    string key = 1;
+    string value = 2;
+}
+
+message PutResponse {
+    ReturnCode ret = 1;
+}
+
+message GetRequest {
+    string key = 1;
+}
+
+message GetResponse {
+    ReturnCode ret = 1;
+    string value = 2;
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+}
+
+message NotifyRequest {
+    Identifier identifier = 1;
+}
+
+message NotifyResponse {
+    string address = 1;
+    int32 ID = 2;
+}
+
+message FindSuccessorRequest {
+    int32 ID = 1;
+    int32 hop = 2;
+}
+
+message FindSuccessorResponse {
+    Identifier identifier = 1;
+    int32 hop = 2;
+}
+
+message InquirePredecessorRequest {
+}
+
+message InquirePredecessorResponse {
+    Identifier identifier = 1;
+}
+
+message TransferDataRequest {
+    int32 ID = 1;
+}
+
+message TransferDataResponse {
+    string dataJson = 1;
+}
+
+message AcceptMyDataRequest {
+    string dataJson = 1;
+}
+
+message AcceptMyDataResponse {
+}
+
+message AddReplicaRequest {
+    Identifier identifier = 1;
+    string jsonData = 2;
+}
+
+message AddReplicaResponse {
+}
+
+message AddScatteredReplicaRequest {
+    string key = 1;
+    string value = 2;
+    Identifier identifier = 3;
+}
+
+message AddScatteredReplicaResponse {
+
+}
+
+message AddMultipleScatteredReplicaRequest {
+    string jsonData = 1;
+    Identifier identifier = 2;
+}
+
+message AddMultipleScatteredReplicaResponse {
+
+}
+
+message RemoveMultipleScatteredReplicaRequest {
+    repeated string key = 1;
+    Identifier identifier = 2;
+}
+
+message RemoveMultipleScatteredReplicaResponse {
+
+}
+
+message MeasureDistanceRequest {
+    int32 ID = 1;
+    int32 count = 2;
+    int32 startPoint = 3;
+}
+
+message MeasureDistanceResponse {
+    int32 distance = 1;
+}
+
+
+
+message Identifier {
+    string IP = 1;
+    int32 port = 2;
+    int32 ID = 3;
+}
+
+
+
+
+//for evalution
+message TellmeKeyNumberRequest {
+
+}
+
+message TellmeKeyNumberResponse {
+    int32 number = 1;
+}
+
+message TellmeFingerTableRequest {
+
+}
+
+message TellmeFingerTableResponse {
+    string fingerTable = 1;
+}
+
+message TellmeReplicaKeyNumberRequest {
+}
+
+message TellmeReplicaKeyNumberResponse {
+    int32 number = 1;
+}
+
+message KillRequest {
+
+}
+
+message KillResponse {
+
+}
